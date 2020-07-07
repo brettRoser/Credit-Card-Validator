@@ -18,7 +18,7 @@
     <Label text="Credit Card Number:"
         GridPane.columnIndex="0" GridPane.rowIndex="1"/>
  
-    <TextField 
+    <TextField fx:id="cardNumberField"
         GridPane.columnIndex="1" GridPane.rowIndex="1"/>
     
     <HBox spacing="10" alignment="bottom_right" 
@@ -26,6 +26,9 @@
         <Button text="Validate"     
         onAction="#handleValidateAction"/>
     </HBox>
+
+    <Label text="Validation Status:"
+        GridPane.columnIndex="0" GridPane.rowIndex="3"/>
     
     <Text fx:id="validationStatus"
         GridPane.columnIndex="1" GridPane.rowIndex="3"/>

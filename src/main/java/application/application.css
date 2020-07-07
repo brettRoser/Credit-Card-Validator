@@ -14,10 +14,16 @@
    	-fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.7), 6, 0.0, 0, 2);
 }
 #validationStatus {
+  -fx-font-size: 12px;
   -fx-fill: FIREBRICK;
   -fx-font-weight: bold;
   -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 0, 0, 0, 1);
 }
+/*#BAD {
+  -fx-fill: #c4d8de;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 0, 0, 0, 1);
+} */
 .button {
     -fx-text-fill: white;
     -fx-font-family: "Arial Narrow";

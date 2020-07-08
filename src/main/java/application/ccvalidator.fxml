@@ -27,11 +27,17 @@
         onAction="#handleValidateAction"/>
     </HBox>
 
-    <Label text="Validation Status:"
+    <Label text="Card Number:"
         GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        
+    <Text fx:id="cardNumberText"
+        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <Label text="Validation Status:"
+        GridPane.columnIndex="0" GridPane.rowIndex="4"/>
     
     <Text fx:id="validationStatus"
-        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
     
     <stylesheets>
       <URL value="@application.css" />

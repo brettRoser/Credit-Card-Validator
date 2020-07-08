@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 public class ValidationController {
 	
     @FXML private Text validationStatus;
+    @FXML private Text cardNumberText;
     @FXML private TextField cardNumberField;
 	
     @FXML protected void handleValidateAction(ActionEvent event) {
@@ -17,6 +18,7 @@ public class ValidationController {
 
 //    	validationStatus.setStyle("-fx-fill: #c4d8de;");
 //    	validationStatus.setId("BAD");
+        cardNumberText.setText(cardNumberField.getText());
         validationStatus.setText(alg.isCardNumberValid(cardNumber) ? "All good!" : "Invalid!");
     }
 

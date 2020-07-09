@@ -3,6 +3,7 @@ package application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class ValidationController {
@@ -16,10 +17,11 @@ public class ValidationController {
         int[] cardNumber = retrieveCardNumber(cardNumberField.getText());
         LuhnsAlg alg = new LuhnsAlg();
 
-//    	validationStatus.setStyle("-fx-fill: #c4d8de;");
-//    	validationStatus.setId("BAD");
         cardNumberText.setText(cardNumberField.getText());
-        validationStatus.setText(alg.isCardNumberValid(cardNumber) ? "All good!" : "Invalid!");
+        if(alg.isCardNumberValid(cardNumber))
+            setValidCardActions();
+        else
+            setInvalidCardActions();
     }
 
     private int[] retrieveCardNumber(String cardNumber) {
@@ -32,5 +34,15 @@ public class ValidationController {
         }
 
         return cardNumberValue;
+    }
+
+    private void setValidCardActions() {
+        validationStatus.setFill(Color.DARKGREEN);
+        validationStatus.setText("All good!");
+    }
+
+    private void setInvalidCardActions() {
+        validationStatus.setFill(Color.FIREBRICK);
+        validationStatus.setText("Invalid");
     }
 }

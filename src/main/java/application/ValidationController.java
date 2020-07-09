@@ -2,6 +2,7 @@ package application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -11,9 +12,16 @@ public class ValidationController {
     @FXML private Text validationStatus;
     @FXML private Text cardNumberText;
     @FXML private TextField cardNumberField;
-	
+    @FXML private Button validateButton;
+
+    @FXML
+    public void initialize() {
+        validateButton.disableProperty().bind(
+			cardNumberField.textProperty().isEmpty()
+        );
+    }
+    
     @FXML protected void handleValidateAction(ActionEvent event) {
-        // TODO: Need to make sure at least one character was entered
         int[] cardNumber = retrieveCardNumber(cardNumberField.getText());
         LuhnsAlg alg = new LuhnsAlg();
 

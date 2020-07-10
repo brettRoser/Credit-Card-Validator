@@ -36,9 +36,15 @@
 
     <Label text="Validation Status:"
         GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-    
+
     <Text fx:id="validationStatus"
         GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+    <Label text="Card Type:"
+        GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+
+    <Text fx:id="cardTypeText"
+        GridPane.columnIndex="1" GridPane.rowIndex="5"/>
     
     <stylesheets>
       <URL value="@application.css" />

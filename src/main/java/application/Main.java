@@ -11,7 +11,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("ccvalidator.fxml"));
-		Scene scene = new Scene(root, 400, 200);
+		Scene scene = new Scene(root, 400, 210);
 	    
 		primaryStage.setTitle("Credit Card Validator");
 		primaryStage.setScene(scene);

@@ -15,6 +15,7 @@ public class ValidationController {
 	
     @FXML private Text validationStatus;
     @FXML private Text cardNumberText;
+    @FXML private Text cardTypeText;
     @FXML private CreditCardTextField cardNumberField;
     @FXML private Button validateButton;
 
@@ -43,7 +44,7 @@ public class ValidationController {
 
         cardNumberText.setText(cardNumberField.getText());
         if(alg.isCardNumberValid(cardNumber))
-            setValidCardActions();
+            setValidCardActions(cardNumber);
         else
             setInvalidCardActions();
     }
@@ -59,9 +60,11 @@ public class ValidationController {
         return cardNumberValue;
     }
 
-    private void setValidCardActions() {
+    private void setValidCardActions(int[] cardNumber) {
         validationStatus.setFill(Color.DARKGREEN);
         validationStatus.setText("All good!");
+        CardTypeIdentifier identifier = new CardTypeIdentifier();
+        cardTypeText.setText(identifier.determineCardType(cardNumber));
     }
 
     private void setInvalidCardActions() {

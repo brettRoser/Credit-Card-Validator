@@ -9,6 +9,9 @@ public class CreditCardTextField extends TextField {
     private final int textFieldMaxLength = 19;
 	
     public CreditCardTextField() {
+    	setPromptText("Enter credit card number:");
+    	setFocusTraversable(false);
+    	
     	// restricts text field to max length of 19 characters (currently no credit card numbers over 19 digits) 
     	textProperty().addListener(new ChangeListener<String>() {
     		@Override

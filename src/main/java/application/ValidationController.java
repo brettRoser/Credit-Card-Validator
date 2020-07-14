@@ -70,5 +70,6 @@ public class ValidationController {
     private void setInvalidCardActions() {
         validationStatus.setFill(Color.FIREBRICK);
         validationStatus.setText("Invalid");
+        cardTypeText.setText("");
     }
 }

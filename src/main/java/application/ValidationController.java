@@ -39,7 +39,7 @@ public class ValidationController {
     }
 
     @FXML protected void handleValidateAction(ActionEvent event) {
-        int[] cardNumber = retrieveCardNumber(cardNumberField.getText());
+        int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberField.getText());
         LuhnsAlg alg = new LuhnsAlg();
 
         cardNumberText.setText(cardNumberField.getText());
@@ -47,17 +47,6 @@ public class ValidationController {
             setValidCardActions(cardNumber);
         else
             setInvalidCardActions();
-    }
-
-    private int[] retrieveCardNumber(String cardNumber) {
-        int[] cardNumberValue = new int[cardNumber.length()];
-        for(int i = 0; i < cardNumber.length(); i++) {
-            if(Character.isDigit(cardNumber.charAt(i))) {
-                cardNumberValue[i] = Integer.parseInt(String.valueOf(cardNumber.charAt(i)));
-            }
-        }
-
-        return cardNumberValue;
     }
 
     private void setValidCardActions(int[] cardNumber) {

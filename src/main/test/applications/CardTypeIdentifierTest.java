@@ -3,6 +3,8 @@ package applications;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import application.CardNumberRetriever;
 import application.CardTypeIdentifier;
@@ -19,123 +21,56 @@ public class CardTypeIdentifierTest {
 	public CardTypeIdentifierTest() {
 		cardIdentifier = new CardTypeIdentifier();
 	}
-	
-	@Test
-	public void checkVisa16DigitType() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("4532199987124129");
+
+	// Visa cards are 16 or 19 digits and start with 4
+	@ParameterizedTest
+	@ValueSource(strings={"4532199987124129", "4916698389459145162"})
+	public void ShouldReturnTrueForVisaCardNumbers(String cardNumberStr) {
+		int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberStr);
 		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(16, cardNumber.length);
+
 		assertEquals(VISA, cardType);
 	}
 	
-	@Test
-	public void checkVisa19DigitType() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("4916698389459145162");
+	// Mastercard numbers are 16 digits and start with 51-55 or range of 222100-272099
+	@ParameterizedTest
+	@ValueSource(strings={"5182602737408973", "5216516395264363", 
+			"5302266251167913", "5499642465482541", "5560450335513899", "2720996029419342"})
+	public void ShouldReturnTrueForMastercardCardNumbers(String cardNumberStr) {
+		int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberStr);
 		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(19, cardNumber.length);
-		assertEquals(VISA, cardType);
-	}
-	
-	@Test
-	public void CheckMasterCardTypeStartingWith_51() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("5182602737408973");
-		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
+
 		assertEquals(16, cardNumber.length);
 		assertEquals(MASTERCARD, cardType);
 	}
-	
-	@Test
-	public void CheckMasterCardTypeStartingWith_52() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("5216516395264363");
-		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(16, cardNumber.length);
-		assertEquals(MASTERCARD, cardType);
-	}
-	
-	@Test
-	public void CheckMasterCardTypeStartingWith_53() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("5302266251167913");
-		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(16, cardNumber.length);
-		assertEquals(MASTERCARD, cardType);
-	}
-	
-	@Test
-	public void CheckMasterCardTypeStartingWith_54() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("5499642465482541");
-		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(16, cardNumber.length);
-		assertEquals(MASTERCARD, cardType);
-	}
-	
-	@Test
-	public void CheckMasterCardTypeStartingWith_55() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("5560450335513899");
-		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(16, cardNumber.length);
-		assertEquals(MASTERCARD, cardType);
-	}
-	
-	//In range of 222100-272099
-	@Test
-	public void CheckMasterCardTypeStartingWith_2() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("2720996029419342");
-		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(16, cardNumber.length);
-		assertEquals(MASTERCARD, cardType);
-	}
-	
-	@Test
-	public void CheckAmericanExpressTypeStartingWith_34() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("349727387955717");
+
+	// American Express card numbers are 15 digits and start with 34 or 37
+	@ParameterizedTest
+	@ValueSource(strings={"349727387955717", "377742306624117"})
+	public void ShouldReturnTrueForAmericanExpressCardNumbers(String cardNumberStr) {
+		int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberStr);
 		String cardType = cardIdentifier.determineCardType(cardNumber);
 		
 		assertEquals(15, cardNumber.length);
 		assertEquals(AMERICANEXPRESS, cardType);
 	}
 	
-	@Test
-	public void CheckAmericanExpressTypeStartingWith_37() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("377742306624117");
+	// Discover card numbers are 16 or 19 digits and start with 6011
+	@ParameterizedTest
+	@ValueSource(strings={"6011831311393252", "6011226614184975206"})
+	public void ShouldReturnTrueForDiscoverCardNumbers(String cardNumberStr) {
+		int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberStr);
 		String cardType = cardIdentifier.determineCardType(cardNumber);
 		
-		assertEquals(15, cardNumber.length);
-		assertEquals(AMERICANEXPRESS, cardType);
-	}
-	
-	@Test 
-	public void CheckDiscoverCard16DigitTypeStartingWith_6011() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("6011831311393252");
-		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(16, cardNumber.length);
-		assertEquals(DISCOVER, cardType);
-	}
-	
-	@Test 
-	public void CheckDiscoverCard19DigitTypeStartingWith_6011() {
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("6011226614184975206");
-		String cardType = cardIdentifier.determineCardType(cardNumber);
-		
-		assertEquals(19, cardNumber.length);
 		assertEquals(DISCOVER, cardType);
 	}
 	
 	// A valid but Unknown card type (Diner's club)
 	@Test
-	public void CheckUnknownCardType() {
+	public void ShouldReturnUnknownCardType() {
 		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("30445426781853");
 		String cardType = cardIdentifier.determineCardType(cardNumber);
 		
 		assertEquals(UNKNOWN, cardType);
 	}
-	
 }

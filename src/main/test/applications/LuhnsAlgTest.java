@@ -1,77 +1,59 @@
 package applications;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import application.CardNumberRetriever;
 import application.LuhnsAlg;
 
 public class LuhnsAlgTest {
 	
-	@Test
-	public void IsVisa16DigitCardValid() {
-		LuhnsAlg alg = new LuhnsAlg();
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("4716083341082553");
-		boolean isCardValid = alg.isCardNumberValid(cardNumber);
-		
-		assertEquals(true, isCardValid);
+	private LuhnsAlg alg;
+	
+	public LuhnsAlgTest() {
+		alg = new LuhnsAlg();
 	}
 
-	@Test
-	public void IsVisa19DigitCardValid() {
-		LuhnsAlg alg = new LuhnsAlg();
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("4532774677789719801");
-		boolean isCardValid = alg.isCardNumberValid(cardNumber);
-		
-		assertEquals(true, isCardValid);
+	// Visa cards are 16 or 19 digits and start with 4
+	@ParameterizedTest
+	@ValueSource(strings={"4532199987124129", "4916698389459145162"})
+	public void ShouldReturnTrueForValidVisaCardNumbers(String cardNumberStr) {
+		int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberStr);
+		assertTrue(alg.isCardNumberValid(cardNumber));
+	}
+
+	// Mastercard numbers are 16 digits and start with 51-55 or range of 222100-272099
+	@ParameterizedTest
+	@ValueSource(strings={"5302266251167913"})
+	public void ShouldReturnTrueForMastercardCardNumbers(String cardNumberStr) {
+		int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberStr);
+		assertTrue(alg.isCardNumberValid(cardNumber));
 	}
 	
-	@Test
-	public void IsDiscover16DigitCardValid() {
-		LuhnsAlg alg = new LuhnsAlg();
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("6011191061519329");
-		boolean isCardValid = alg.isCardNumberValid(cardNumber);
-		
-		assertEquals(true, isCardValid);
+	// American Express card numbers are 15 digits and start with 34 or 37
+	@ParameterizedTest
+	@ValueSource(strings={"341674490894391"})
+	public void ShouldReturnTrueForAmericanExpressCardNumbers(String cardNumberStr) {
+		int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberStr);		
+		assertTrue(alg.isCardNumberValid(cardNumber));
 	}
-	
-	@Test
-	public void IsDiscover19DigitCardValid() {
-		LuhnsAlg alg = new LuhnsAlg();
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("6011788841539633814");
-		boolean isCardValid = alg.isCardNumberValid(cardNumber);
-		
-		assertEquals(true, isCardValid);
+
+	// Discover card numbers are 16 or 19 digits and start with 6011
+	@ParameterizedTest
+	@ValueSource(strings={"6011191061519329", "6011788841539633814"})
+	public void ShouldReturnTrueForDiscoverCardNumbers(String cardNumberStr) {
+		int[] cardNumber = CardNumberRetriever.retrieveCardNumber(cardNumberStr);		
+		assertTrue(alg.isCardNumberValid(cardNumber));
 	}
-	
-	// All Mastercards cards are 16 characters
+
+	// A valid but Unknown card type (Diner's club)
 	@Test
-	public void IsMastercardCardValid() {
-		LuhnsAlg alg = new LuhnsAlg();
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("5302266251167913");
-		boolean isCardValid = alg.isCardNumberValid(cardNumber);
-		
-		assertEquals(true, isCardValid);
-	}
-	
-	// All American Express cards are 15 characters
-	@Test
-	public void IsAmericanExpressCardValid() {
-		LuhnsAlg alg = new LuhnsAlg();
-		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("341674490894391");
-		boolean isCardValid = alg.isCardNumberValid(cardNumber);
-		
-		assertEquals(true, isCardValid);
-	}
-	
-	@Test
-	public void IsCardInvalid() {
-		LuhnsAlg alg = new LuhnsAlg();
+	public void ShouldReturnFalseForInvalidCard() {
 		int[] cardNumber = CardNumberRetriever.retrieveCardNumber("341674490894390");
-		boolean isCardValid = alg.isCardNumberValid(cardNumber);
-		
-		assertEquals(false, isCardValid);
+		assertFalse(alg.isCardNumberValid(cardNumber));
 	}
-	
 }
